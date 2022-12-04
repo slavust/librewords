@@ -50,7 +50,7 @@ def render_cloud_from_text(text, output_img_path, remove_most_frequent):
     
     word_and_count = __get_words_sorted_by_freq(text)
     if remove_most_frequent:
-        word_and_count = word_and_count[int(len(word_and_count)*0.15):]
+        word_and_count = word_and_count[int(len(word_and_count)*0.25):]
         
     if language != 'en':
         words_en = [word for word, _ in word_and_count]
@@ -59,7 +59,7 @@ def render_cloud_from_text(text, output_img_path, remove_most_frequent):
 
     # show
     frequencies = {word : count for word, count in word_and_count}
-    wc = wordcloud.WordCloud(width=2048, height=2048, background_color='white', max_words=__MAX_WORDS_OUTPUT).generate_from_frequencies(frequencies)
+    wc = wordcloud.WordCloud(width=2048, height=2048, background_color='white', max_words=__MAX_WORDS_OUTPUT, relative_scaling=0.9).generate_from_frequencies(frequencies)
     wc.to_file(output_img_path)
 
 if __name__ == '__main__':
