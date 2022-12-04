@@ -8,7 +8,8 @@ import argparse
 def get_text_from_url(url):
     try:
         with urllib.request.urlopen(url) as page:
-            html = page.read().decode('utf-8')
+            encoding = page.headers.get_content_charset()
+            html = page.read().decode(encoding)
     except RuntimeError as e:
         print('Unable to load ' + url)
         return ''
