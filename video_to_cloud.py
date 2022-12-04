@@ -30,6 +30,7 @@ if __name__ == '__main__':
                         dest='remove_obvious',
                         action='store_true')
     parser.add_argument('-l', '--lang', help='audio language', default='en', required=False)
+    parser.set_defaults(remove_obvious=False)
     args = parser.parse_args()
     
     render_cloud_from_video(args.video, args.output, args.lang, args.remove_obvious)

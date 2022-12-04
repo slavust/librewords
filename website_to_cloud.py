@@ -62,6 +62,6 @@ if __name__ == '__main__':
                         required=False, 
                         dest='remove_obvious',
                         action='store_true')
-    parser.set_defaults(remove_obvious=True)
+    parser.set_defaults(remove_obvious=False)
     args = parser.parse_args()
     render_cloud_from_website(args.url, args.output, args.remove_obvious)

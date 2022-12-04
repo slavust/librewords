@@ -18,6 +18,7 @@ def __get_words_sorted_by_freq(text):
     words_to_exclude = set(stopwords.words('english')) | set(wordcloud.STOPWORDS)
     split = list(filter(lambda word : word not in words_to_exclude, split))
 
+
     sorted_lemmas = []
 
     words_by_lemmas = OrderedDict()
@@ -46,17 +47,21 @@ def render_cloud_from_text(text, output_img_path, remove_most_frequent):
     language = cld3.get_language(text).language
     print('Language:', language)
     if language != 'en':
+        print('Translating...')
         text = translate.translate(text, language, 'en')
     
+    print('Countinig words stats...')
     word_and_count = __get_words_sorted_by_freq(text)
     if remove_most_frequent:
         word_and_count = word_and_count[int(len(word_and_count)*0.25):]
         
     if language != 'en':
+        print('Translating back...')
         words_en = [word for word, _ in word_and_count]
         words_translated = translate.batch_translate(words_en, 'en', language)
         word_and_count = [(wt, en_with_count[1]) for wt, en_with_count in zip(words_translated, word_and_count)]
 
+    print('generating image...')
     # show
     frequencies = {word : count for word, count in word_and_count}
     wc = wordcloud.WordCloud(width=2048, height=2048, background_color='white', max_words=__MAX_WORDS_OUTPUT, relative_scaling=0.9).generate_from_frequencies(frequencies)
@@ -72,6 +77,7 @@ if __name__ == '__main__':
                         help='exclude 15 percents of most frequent words',
                          required=False, 
                          default=False)
+    parser.set_defaults(remove_obvious=False)
     args = parser.parse_args()
 
     text_file_path = args.text
