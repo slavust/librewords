@@ -11,37 +11,35 @@ import numpy as np
 import cld3
 import translate
 
-__MAX_WORDS_OUTPUT = 300 # already a bit slow
+__MAX_WORDS_OUTPUT = 300
 
 def __get_words_sorted_by_freq(text):
     split = nltk.word_tokenize(text)
     words_to_exclude = set(stopwords.words('english')) | set(wordcloud.STOPWORDS)
     split = list(filter(lambda word : word not in words_to_exclude, split))
 
-    #if len(split) > 5000:
-    #    split = list(np.random.choice(split, __MAX_WORDS, replace=False))
-
     sorted_lemmas = []
+
+    words_by_lemmas = OrderedDict()
+    for word in split:
+        synsets = wn.synsets(word)
+        word_lemmas = list()
+        for synset in synsets:
+            for lemma in synset.lemmas():
+                if lemma in word_lemmas:
+                    continue
+                word_lemmas.append(lemma)
+        for lemma in word_lemmas:
+            words_by_lemmas.setdefault(lemma, list()).append(word)
+    words_by_lemmas = [[lemma, words] for lemma, words in zip(words_by_lemmas.keys(), words_by_lemmas.values())]
     while len(sorted_lemmas) < __MAX_WORDS_OUTPUT:
-        words_by_lemmas = OrderedDict()
-        for word in split:
-            synsets = wn.synsets(word)
-            word_lemmas = list()
-            for synset in synsets:
-                for lemma in synset.lemmas():
-                    if lemma in word_lemmas:
-                        continue
-                    word_lemmas.append(lemma)
-            for lemma in word_lemmas:
-                words_by_lemmas.setdefault(lemma, list()).append(word)
-        any_lemma_found = len(words_by_lemmas.keys()) > 0
-        if not any_lemma_found:
+        lemma, words = max(words_by_lemmas, key=lambda x: len(x[1]))
+        if len(words) == 0:
             break
-        words_by_lemmas = [(words[0], words) for lemma, words in zip(words_by_lemmas.keys(), words_by_lemmas.values())]
-        max_priority = max(words_by_lemmas, key=lambda lemma: len(lemma[1]))
-        sorted_lemmas.append((max_priority[0], len(max_priority[1])))
-        words_to_delete = set(max_priority[1])
-        split = list(filter(lambda word: word not in words_to_delete, split))
+        sorted_lemmas.append([words[0], len(words)])
+        words_to_delete = set(words)
+        # remove selected words usages from other lemmas
+        words_by_lemmas = [[lemma, list(filter(lambda w: w not in words_to_delete, words))] for lemma, words in words_by_lemmas]
     return sorted_lemmas
 
 def render_cloud_from_text(text, output_img_path, remove_most_frequent):
