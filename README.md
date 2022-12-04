@@ -18,7 +18,7 @@ Also, you may need to install ffmpeg to use `speech_to_cloud.py` and `video_to_c
 # Usage:
 `url_to_cloud.py -u "https://en.wikipedia.org/wiki/Manufacturing_Consent" -o manufacturing_consent.png`
 
-**Note:** for now first the time using language different from English will take really long because of installing translation packages.
+**Note:** for now the first time using language different from English will take really long because of installing translation packages.
 
 **Result:**
 
