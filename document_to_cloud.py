@@ -191,8 +191,7 @@ lang_codes = {
 'zu': 'zul'
 }
 
-
-def render_wordcloud_from_document(doc_path, output_image_path, exclude_obvious, language):
+def get_text_from_document(doc_path, language):
     # added as submodule
     tessdata_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tessdata')
     os.environ['TESSDATA_PREFIX'] = tessdata_path
@@ -201,7 +200,10 @@ def render_wordcloud_from_document(doc_path, output_image_path, exclude_obvious,
         language = lang_codes[language]
 
     text = textract.process(doc_path, output_encoding='utf-8', language=language).decode('utf-8')
-    print(text)
+    return text
+
+def render_wordcloud_from_document(doc_path, output_image_path, exclude_obvious, language):
+    text = get_text_from_document(doc_path, language)
     text_to_cloud.render_cloud_from_text(text, output_image_path, exclude_obvious)
 
 if __name__ == '__main__':
