@@ -11,7 +11,7 @@ import numpy as np
 import cld3
 import translate
 
-__MAX_WORDS_OUTPUT = 500
+__MAX_WORDS_OUTPUT = 1000
 
 def __get_words_sorted_by_freq(text):
     split = nltk.word_tokenize(text)
@@ -68,8 +68,9 @@ def render_cloud_from_text(text, output_img_path, remove_most_frequent):
         frequencies.setdefault(word, 0)
         frequencies[word] += count
     print(len(frequencies.keys()))
-    wc = wordcloud.WordCloud(width=1024, height=1024, background_color='white', relative_scaling=0.9).generate_from_frequencies(frequencies)
+    wc = wordcloud.WordCloud(width=1024, height=1024, background_color='white').generate_from_frequencies(frequencies)
     wc.to_file(output_img_path)
+    print('done')
 
 if __name__ == '__main__':
     # parse command-line
