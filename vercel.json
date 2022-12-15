@@ -2,6 +2,8 @@
 {
     "functions": {
         "telegram-bot.py": {
+            "memory": 2048,
+            "maxDuration": 10
         }
     },
     "installCommand": "pip install -r requirements_telegram_bot.txt"
