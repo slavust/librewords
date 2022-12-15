@@ -73,7 +73,7 @@ async def make_reply_to_message(update: Update, context: ContextTypes.DEFAULT_TY
 
 
 if __name__ == '__main__':
-    API_TOKEN = ''
+    API_TOKEN = os.environ['API_TOKEN']
     application = ApplicationBuilder().token(API_TOKEN).build()
     application.add_handler(CommandHandler('start', start))
     application.add_handler(
