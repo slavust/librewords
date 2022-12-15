@@ -5,7 +5,5 @@
             "memory": 1024,
             "maxDuration": 10
         }
-    },
-    "buildCommand":"mkdir api ; cp *.py api",
-    "installCommand": "pip install -r requirements_telegram_bot.txt"
+    }
   }
