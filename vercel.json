@@ -1,6 +1,6 @@
 {
     "functions": {
-      "./telegram-bot.py": {
+      "api/telegram-bot.py": {
         "memory": 1024,
         "maxDuration": 10
       }
