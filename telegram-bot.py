@@ -4,8 +4,6 @@
 from telegram import Update, MessageEntity, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ConversationHandler, MessageHandler, ContextTypes, CallbackContext, CallbackQueryHandler, filters
 
-import video_to_cloud
-import speech_to_cloud
 import text_to_cloud
 import document_to_cloud
 import url_to_cloud
@@ -17,8 +15,6 @@ import os.path
 SUPPORT_TEXT = True
 SUPPORT_URLS = True
 SUPPORT_DOCUMENTS = True
-SUPPORT_AUDIO = False
-SUPPORT_VIDEO = False
 
 EXPECT_LANGUAGE_SELECT = 0
 

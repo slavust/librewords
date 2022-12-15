@@ -1,16 +1,8 @@
 
 {
-    "builds": [
-      {
-        "src": "telegram-bot.py",
-        "use": "@vercel/python"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "telegram-bot.py"
-      }
-    ],
+    "functions": {
+        "telegram-bot.py": {
+        }
+    },
     "installCommand": "pip install -r requirements_telegram_bot.txt"
   }
