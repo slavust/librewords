@@ -2,7 +2,7 @@
     "functions": {
       "telegram-bot.py": {
         "memory": 1024,
-        "maxDuration": 59
+        "maxDuration": 10
       }
     }
   }
