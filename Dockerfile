@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.10-bullseye
+FROM python:3.10-slim-bullseye
 
 WORKDIR /bot
 RUN apt-get update && apt-get install -y \
