@@ -23,4 +23,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: librewords:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/librewords:latest
