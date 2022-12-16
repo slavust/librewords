@@ -11,4 +11,4 @@ COPY requirements.txt requirements.txt
 COPY *.py ./
 RUN pip3 install -r requirements.txt
 RUN python3 -c 'import argostranslate.package; import argostranslate.argospm; argostranslate.package.update_package_index(); argostranslate.argospm.install_all_packages()'
-CMD ['telegram-bot.py']
+CMD ['./telegram-bot.py']
