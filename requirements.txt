@@ -9,3 +9,4 @@ requests>=2.22.0
 SpeechRecognition>=3.8.1
 textract>=1.6.5
 wordcloud>=1.8.2.2
+python_telegram_bot>=20.0a6
