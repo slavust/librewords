@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt requirements.txt
 COPY *.py ./
 RUN pip3 install -r requirements.txt
-CMD python3 -c 'import nltk; nltk.download(\'punkt\')'
-CMD python3 -c 'import argostranslate.package; import argostranslate.argospm; argostranslate.package.update_package_index(); argostranslate.argospm.install_all_packages()'
-CMD python3 telegram-bot.py
+CMD python3 -c "import nltk; nltk.download('punkt')" && \
+    python3 -c 'import argostranslate.package; import argostranslate.argospm; argostranslate.package.update_package_index(); argostranslate.argospm.install_all_packages()' && \
+    python3 telegram-bot.py
