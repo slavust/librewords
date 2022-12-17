@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG TRANSLATION_PACKAGES_DIR=/translation-packages/
+ARG TRANSLATION_PACKAGES_DIR=translation-packages/
 
 FROM slavust/argos-translate as language_packages
 COPY $ARGOS_PACKAGES_DIR/* $TRANSLATION_PACKAGES_DIR
