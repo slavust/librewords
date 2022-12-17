@@ -2,11 +2,11 @@
 ARG TRANSLATION_PACKAGES_DIR=/argos-translate-packages/
 
 FROM slavust/argos-translate as language_packages
-COPY $ARGOS_PACKAGES_DIR $TRANSLATION_PACKAGES_DIR
+COPY $ARGOS_PACKAGES_DIR/* $TRANSLATION_PACKAGES_DIR
 
 FROM python:3.10-slim-bullseye
 
-COPY --from=language_packages $TRANSLATION_PACKAGES_DIR $TRANSLATION_PACKAGES_DIR
+COPY --from=language_packages $TRANSLATION_PACKAGES_DIR/* $TRANSLATION_PACKAGES_DIR
 ENV ARGOS_PACKAGES_DIR=$TRANSLATION_PACKAGES_DIR
 WORKDIR /bot
 RUN apt-get update && apt-get install -y \
