@@ -11,5 +11,7 @@ COPY requirements.txt requirements.txt
 COPY *.py ./
 RUN pip3 install -r requirements.txt
 CMD python3 -c "import nltk; nltk.download('punkt')" && \
+    python3 -c "import nltk; nltk.download('stopwords')" && \
+    python3 -c "import nltk; nltk.download('wordnet')" && \
     python3 -c 'import argostranslate.package; import argostranslate.argospm; argostranslate.package.update_package_index(); argostranslate.argospm.install_all_packages()' && \
     python3 telegram-bot.py
