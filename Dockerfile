@@ -1,16 +1,6 @@
 # syntax=docker/dockerfile:1
-ARG TRANSLATION_PACKAGES_DIR=/translation-packages/
-
-FROM slavust/argos-translate as language_packages
-ARG TRANSLATION_PACKAGES_DIR
-WORKDIR $TRANSLATION_PACKAGES_DIR
-COPY $ARGOS_PACKAGES_DIR/* .
 
 FROM python:3.10-slim-bullseye
-ARG TRANSLATION_PACKAGES_DIR
-WORKDIR $TRANSLATION_PACKAGES_DIR
-COPY --from=language_packages $TRANSLATION_PACKAGES_DIR/* .
-ENV ARGOS_PACKAGES_DIR=$TRANSLATION_PACKAGES_DIR
 WORKDIR /bot
 RUN apt-get update && apt-get install -y \
                                         build-essential \
@@ -19,8 +9,12 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt requirements.txt
 COPY *.py ./
 RUN pip3 install -r requirements.txt
+
 RUN python3 -c "import nltk; nltk.download('punkt')" && \
     python3 -c "import nltk; nltk.download('stopwords')" && \
     python3 -c "import nltk; nltk.download('wordnet')"
+
+RUN python3 -c "import argostranslate.package; argostranslate.package.update_package_index()" && \
+    python3 -c "import argostranslate.argospm; argostranslate.argospm.install_all_packages()"
 
 CMD python3 telegram-bot.py
