@@ -2,8 +2,9 @@
 import sys
 import argostranslate.package, argostranslate.translate, argostranslate.argospm
 import argparse
-import sys
+import os
 import cld3
+import re
 
 def __is_translation_installed(src_lang, dest_lang):
     installed_languages = argostranslate.translate.get_installed_languages()
@@ -63,6 +64,12 @@ def translate(text, src_lang, dest_lang):
     #    if not __is_translation_downloadable(src_lang, dest_lang):
     #        raise NoAvailableTranslation()
     #    __install_translation(src_lang, dest_lang)
+    if 'MAX_WORDS_TO_TRANSLATE' in os.environ:
+        words = re.split(' |\t|\r|\n', text)
+        print('num words:', len(words))
+        if len(words) > int(os.environ['MAX_WORDS_TO_TRANSLATE']):
+            print('Warning: max number of words reached, will cut', file=sys.stderr)
+            text = ' '.join(words[:int(os.environ['MAX_WORDS_TO_TRANSLATE'])])
 
     installed_languages = argostranslate.translate.get_installed_languages()
     from_translators = list(filter(
