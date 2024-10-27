@@ -1,12 +1,10 @@
 argostranslate>=1.7.5
 matplotlib>=3.6.2
-moviepy>=1.0.3
 nltk>=3.7
 numpy>=1.23.4
 pycld3>=0.22
 pydub>=0.25.1
 requests>=2.22.0
-SpeechRecognition>=3.8.1
 textract>=1.6.5
 wordcloud>=1.8.2.2
 python_telegram_bot>=20.0a6
